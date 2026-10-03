@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Announcements - Smart Campus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Campus Announcements</h1>
+</header>
+
+<div class="container">
+    <h2>Latest Announcements</h2>
+    {% if session.get("role") == "Admin" %}
+<h3>Publish Announcement</h3>
+<form method="POST" action="/add_announcement">
+    <label>Title</label><br>
+    <input type="text" name="title" required><br><br>
+
+    <label>Message</label><br>
+    <textarea name="message" required></textarea><br><br>
+
+    <button type="submit">Publish</button>
+</form>
+{% endif %}
+
+    {% for announcement in announcements %}
+    <div class="card">
+        <h3>{{ announcement[1] }}</h3>
+        <p>{{ announcement[2] }}</p>
+        <small>{{ announcement[3] }}</small>
+    </div>
+    {% else %}
+    <p>No announcements available yet.</p>
+    {% endfor %}
+
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+</body>
+</html>

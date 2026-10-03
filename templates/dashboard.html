@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Smart Campus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>Smart Campus Platform</h1>
+    <p>Welcome to your campus dashboard</p>
+</header>
+
+<div class="container">
+
+    <h2>Welcome, {{ name }}!</h2>
+    <p>Your role: {{ session.get("role") }}</p>
+    <p>Select a service below.</p>
+    <a href="/logout">Logout</a>
+
+    <div class="services">
+
+        <div class="card">
+    <h3>Tasks & Assignments</h3>
+    <p>Manage your academic tasks.</p>
+    <a href="/tasks">Open Tasks</a>
+        </div>
+
+        <div class="card">
+            <h3>Documents</h3>
+            <p>Access campus documents.</p>
+        </div>
+
+        <div class="card">
+    <h3>Announcements</h3>
+    <p>View campus announcements.</p>
+    <a href="/announcements">View Announcements</a>
+      </div>
+
+        <div class="card">
+    <h3>Complaints & Requests</h3>
+    <p>Submit campus-related requests.</p>
+    <a href="/complaints">Open Complaints</a>
+</div>
+
+        <div class="card">
+    <h3>Events</h3>
+    <p>Explore upcoming campus events.</p>
+    <a href="/events">View Events</a>
+</div>
+
+    </div>
+
+</div>
+<footer>
+    <p>Smart Campus Platform | MCA </p>
+</footer>
+</body>
+</html>

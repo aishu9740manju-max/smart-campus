@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Campus Events</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Campus Events</h1>
+</header>
+
+<div class="container">
+    <h2>Upcoming Events</h2>
+{% if session.get("role") == "Admin" %}
+<h3>Publish New Event</h3>
+<form method="POST" action="/add_event">
+    <label>Event Title</label><br>
+    <input type="text" name="title" required><br><br>
+
+    <label>Description</label><br>
+    <textarea name="description"></textarea><br><br>
+
+    <label>Event Date</label><br>
+    <input type="date" name="event_date" required><br><br>
+
+    <button type="submit">Publish Event</button>
+</form>
+{% endif %}
+
+    {% for event in events %}
+    <div class="card">
+        <h3>{{ event[1] }}</h3>
+        <p>{{ event[2] }}</p>
+        <p>Date: {{ event[3] or "Not set" }}</p>
+    </div>
+    {% else %}
+    <p>No events available yet.</p>
+    {% endfor %}
+
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaints & Requests</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Complaints & Requests</h1>
+</header>
+
+<div class="container">
+    <h2>Submit a Complaint or Request</h2>
+
+    <form method="POST">
+        <label>Subject</label><br>
+        <input type="text" name="subject" required><br><br>
+
+        <label>Message</label><br>
+        <textarea name="message" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if session.get("role") == "Admin" %}
+<h2>All Complaints</h2>
+{% else %}
+<h2>My Submissions</h2>
+{% endif %}
+
+    {% for complaint in complaints %}
+    <div class="card">
+        <h3>{{ complaint[2] }}</h3>
+        <p>{{ complaint[3] }}</p>
+        <p>Status: {{ complaint[4] }}</p>
+{% if session.get("role") == "Admin" %}
+<form method="POST" action="/update_complaint/{{ complaint[0] }}">
+    <select name="status">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+    </select>
+    <button type="submit">Update Status</button>
+</form>
+{% endif %}
+    </div>
+    {% else %}
+    <p>No submissions yet.</p>
+    {% endfor %}
+
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+</body>
+</html>

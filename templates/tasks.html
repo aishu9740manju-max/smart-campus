@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tasks - Smart Campus</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Tasks & Assignments</h1>
+    <p>Manage your academic tasks</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Add New Task</h2>
+
+        <form method="POST">
+            <label>Task Title</label><br>
+            <input type="text" name="title" required><br><br>
+
+            <label>Description</label><br>
+            <textarea name="description"></textarea><br><br>
+
+            <label>Due Date</label><br>
+            <input type="date" name="due_date"><br><br>
+
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <h2>My Tasks</h2>
+
+    {% for task in tasks %}
+    <div class="card">
+        <h3>{{ task[1] }}</h3>
+        <p>{{ task[2] }}</p>
+        <p>Due: {{ task[3] or "Not set" }}</p>
+        <p>Status: {{ task[4] }}</p>
+        {% if task[4] != "Completed" %}
+<form method="POST" action="/complete/{{ task[0] }}">
+    <button type="submit">Mark Completed</button>
+</form>
+{% endif %}
+<form method="POST" action="/delete/{{ task[0] }}">
+    <button type="submit">Delete Task</button>
+</form>
+
+    </div>
+    {% else %}
+    <p>No tasks added yet.</p>
+    {% endfor %}
+
+    <p><a href="/dashboard">Back to Dashboard</a></p>
+
+</div>
+<a href="/dashboard">Back to Dashboard</a>
+</body>
+</html>
